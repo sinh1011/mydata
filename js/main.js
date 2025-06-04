@@ -1,16 +1,7 @@
-// let ischeck = true
-// if (ischeck) {
-//     console.log("Dang nhap thanh cong");
-// }
-// else{
-//     console.log("Dang nhap that bai");
-// }
-// console.log(ischeck)
-// console.log("sinh dep trai");
-const user = {
-  ten: "sinh",
-  tuoi: 32,
-};
+// const user = {
+//   ten: "sinh",
+//   tuoi: 32,
+// };
 
 const products = [
   {
@@ -29,6 +20,24 @@ const products = [
     hotproduct: true,
     img: "",
   },
+   {
+    name: "iphone 3gs",
+    oldprice: 29990,
+    saleprice: 27990,
+    amount: 0,
+    hotproduct: true,
+    img: "",
+  },
 ];
 
-console.log(products);
+const display = document.getElementById("display");
+display.innerHTML = products
+  .map((item) => {
+    return `<div>
+    <h3>${item.name}</h3>
+    <p>${item.oldprice}</p>
+    <p>${item.saleprice}</p>
+    <p>${item.amount===0 ? "het hang" : "con hang"}</p>
+    </div>`;
+  })
+  .join("");
