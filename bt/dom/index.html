@@ -1,24 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <body>
     <div id="infor">
-    <input id="ten" type="text">
-    <select name="City" id="City">
-        <option value="SaiGon">SaiGon</option>
-        <option value="HaNoi">HaNoi</option>    
-    </select>
-    <input type="radio" name="sex" value="Nam">
-    <label for="sex">Nam</label>
-    <input type="radio" name="sex" value="Nu">
-    <label for="sex">Nu</label>
-    <button id="buttonHienThi">Hiển Thị</button>
-    <p id="ketQua"></p>
-</div>
+      <p><input id="ten" placeholder="Ho Va Ten" type="text" /></p>
+      <p>
+        <select name="City" id="city">
+          <option value="SaiGon">SaiGon</option>
+          <option value="HaNoi">HaNoi</option>
+        </select>
+      </p>
+      <p>
+        <input checked type="radio" name="sex" value="Nam" />
+        <label for="sex">Nam</label>
+        <input type="radio" name="sex" value="Nu" />
+        <label for="sex">Nu</label>
+      </p>
+      <button onclick="handleSubmit()">Hiển Thị</button>
+    </div>
+    <div id="display"></div>
     <script src="main.js"></script>
-</body>
+  </body>
 </html>

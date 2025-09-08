@@ -1,17 +1,20 @@
-const logButton = () => {
-  const nameValue = document.getElementById("ten").value;
-  const sex = document.querySelector('input[name="sex"]:checked');
-  const cityValue = document.getElementById("City").value;
+const name = document.getElementById("ten");
+const city = document.getElementById("city");
+const sex = document.querySelectorAll("input[type='radio'][name='sex']");
 
-  if (sex) {
-    document.getElementById("ketQua").innerHTML =
-      `Tên: ${nameValue}<br>Giới tính: ${sex.value}<br>Thành phố: ${cityValue}`;
-  } else {
-    document.getElementById("ketQua").innerHTML =
-      `Tên: ${nameValue}<br>Chưa chọn giới tính!<br>Thành phố: ${cityValue}`;
-  }
+const display = document.getElementById("display");
 
-  console.log(nameValue);
+console.log(city.value);
+
+const handleSubmit = () => {
+  let valSex = "";
+  sex.forEach((item) => {
+    if (item.checked) {
+      valSex = item.value;
+    }
+  });
+
+  display.innerHTML = `<p>Ho va ten: ${name.value}</p>
+  <p>Thanh pho: ${city.value}</p>
+  <p>Gioi tinh: ${valSex}</p>`;
 };
-
-document.getElementById("buttonHienThi").addEventListener("click", logButton);
