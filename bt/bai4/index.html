@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="sweetalert2.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <title>Todo list</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+    }
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    #wrapper {
+      background-color: rgb(99, 140, 228);
+      display: inline-block;
+      padding: 20px 10px;
+      border-radius: 20px;
+      min-height: 500px;
+      max-width: 439px;
+      color: white;
+    }
+    #wrapper h1.title,
+    ul.list-job > li .wp-status-job .status-job {
+      text-transform: capitalize;
+    }
+    #wrapper #inputNameJob {
+      width: 62%;
+    }
+    #wrapper #inputNameJob,
+    #searchJob {
+      margin: 20px 0;
+      font-size: 16px;
+      line-height: 20px;
+      padding: 3px;
+      border-radius: 5px;
+      outline: unset;
+      border: unset;
+    }
+    .wp-status {
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .wp-button > .btn {
+      padding: 5px 30px;
+      border-radius: 10px;
+      border: unset;
+      color: white;
+      margin-right: 10px;
+    }
+    .wp-button > .btn.btn-add {
+      background-image: linear-gradient(to right, #ff5e00, #ffb100);
+    }
+    .wp-button > .btn.btn-clear {
+      background-image: linear-gradient(to right, #1eb1c1c7, #0880af);
+    }
+    label,
+    input,
+    button,
+    select {
+      cursor: pointer;
+      height: 27px;
+      border-radius: 5px;
+    }
+    ul.list-job {
+      margin: 20px 0;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      list-style: none;
+      gap: 20px;
+    }
+    ul.list-job > li {
+      border: 1px solid rgb(177, 172, 172);
+      border-radius: 10px;
+      padding: 5px;
+      display: flex;
+      align-items: center;
+      width: 100%;
+      gap: 15px;
+      min-height: 50px;
+    }
+    ul.list-job > li .name-job {
+      width: 60%;
+    }
+    ul.list-job > li .wp-status-job,
+    ul.list-job > li .wp-button-job {
+      width: 20%;
+    }
+    ul.list-job > li .wp-status-job {
+      text-align: center;
+      padding: 4px 0;
+      border-radius: 5px;
+    }
+    ul.list-job > li .wp-status-job.todo {
+      background-color: rgb(192, 2, 160);
+    }
+    ul.list-job > li .wp-status-job.done {
+      background-color: rgb(230, 195, 0);
+    }
+    ul.list-job > li .wp-status-job.doing {
+      background-color: rgb(0, 217, 255);
+    }
+    ul.list-job > li .wp-status-job.resolved {
+      background-color: rgb(169, 255, 88);
+    }
+    ul.list-job > li .wp-status-job.reopen {
+      background-color: rgb(255, 0, 128);
+    }
+
+    ul.list-job > li .wp-button-job {
+      display: flex;
+      justify-content: flex-end;
+      gap: 5px;
+    }
+    ul.list-job > li .wp-button-job > button {
+      padding: 2px;
+    }
+  </style>
+  <body>
+    <div id="wrapper">
+      <h1 class="title" id="test_localStorage">Thêm công việc</h1>
+      <input
+        type="text"
+        placeholder="Thêm Công việc"
+        name="job"
+        id="inputNameJob"
+        value=""
+      />
+      <select name="selectJob" id="selectJob">
+        <option value="all">All</option>
+        <option value="todo">Todo</option>
+        <option value="done">Done</option>
+        <option value="doing">Doing</option>
+        <option value="resolved">Resolved</option>
+        <option value="reopen">Reopen</option>
+      </select>
+      <p id="mess_title"></p>
+      <div class="wp-status">
+        <span>status:</span>
+        <input checked type="radio" name="statusJob" id="todoJob" value="todo" />
+        <label for="todoJob">Todo</label>
+        <input type="radio" name="statusJob" id="doneJob" value="done" />
+        <label for="doneJob">Done</label>
+        <input type="radio" name="statusJob" id="doingJob" value="doing" />
+        <label for="doingJob">Doing</label>
+        <input
+          type="radio"
+          name="statusJob"
+          id="resolvedJob"
+          value="resolved"
+        />
+        <label for="resolvedJob">Resolved</label>
+        <input type="radio" name="statusJob" id="reopenJob" value="reopen" />
+        <label for="reopenJob">Reopen</label>
+      </div>
+      <p id="mess_status"></p>
+      <div class="wp-button">
+        <button class="btn btn-add" id="btn-submit" onclick="handleSubmit()">
+          Thêm
+        </button>
+        <button class="btn btn-clear" onclick="clearData()">Clear</button>
+        <button class="btn btn-clear" onclick="clearDataLocal()">
+          Clear Data Local
+        </button>
+      </div>
+      <ul class="list-job" id="hien-thi"></ul>
+      <div id="no-data"></div>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>
