@@ -167,9 +167,9 @@ const getDataLocalStorage = () => {
 getDataLocalStorage();
 
 const clearDataLocal = () => {
-  localStorage.removeItem("dataTasks")
-  if(localStorage.getItem("dataTasks") === null){
-    render([])
+  localStorage.removeItem("dataTasks");
+  if (localStorage.getItem("dataTasks") === null) {
+    render([]);
   }
   // location.reload();
-}
+};
