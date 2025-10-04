@@ -26,7 +26,7 @@
 const loader= document.getElementById("loader")
 const box = document.getElementById("box");
 
-const productsData = fetch("https://dummyjson.com/products?limit=12")
+const productsData = fetch("https://dummyjson.com/products?limit=24")
   .then((res) => res.json())
   .then((data) => data.products)
   .then((products) => {
@@ -44,9 +44,9 @@ const render = (arr = []) => {
       return `
       <div class="box">
           <h2>${item.title}</h2>
-          <p>brand:${item.price}</p>
-          <p>price:${item.price}</p>
-          <p>stock:${item.stock}</p>
+          <p>Brand: ${item.brand}</p>
+          <p>Price: ${item.price}$</p>
+          <p>tock: ${item.stock}</p>
        </div>`;
     })
     .join("");
