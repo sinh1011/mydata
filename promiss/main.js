@@ -23,14 +23,14 @@
 // };
 
 // loadData();
-const loader= document.getElementById("loader")
+const loader = document.getElementById("loader");
 const box = document.getElementById("box");
 
-const productsData = fetch("https://dummyjson.com/products?limit=24")
+const productsData = fetch("https://dummyjson.com/products")
   .then((res) => res.json())
   .then((data) => data.products)
   .then((products) => {
-    loader.classList.toggle("hidden")
+    loader.classList.toggle("hidden");
     console.log(products);
     render(products);
   })
