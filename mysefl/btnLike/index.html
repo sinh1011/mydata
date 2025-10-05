@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Bài 5 - Like Button</title>
+  <style>
+    #heart {
+      font-size: 50px;
+      cursor: pointer;
+      color: gray; /* ban đầu là xám */
+      transition: all 0.3s ease;
+      user-select: none;
+    }
+
+    #heart.liked {
+      color: red;        /* khi like đổi sang đỏ */
+      transform: scale(1.2);
+    }
+  </style>
+</head>
+<body>
+  <span id="heart">❤️</span>
+
+  <script>
+    const heart = document.getElementById("heart");
+
+    heart.addEventListener("click", () => {
+      alert("ban da nhan like")
+    });
+  </script>
+</body>
+</html>

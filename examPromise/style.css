@@ -1,0 +1,36 @@
+.box {
+  display: flex; /* 1️⃣ Dùng flex để kiểm soát bố cục dọc */
+  flex-direction: column; /* sắp theo chiều dọc */
+  justify-content: space-between; /* 2️⃣ Đẩy nội dung & button xa nhau */
+  align-items: center; /* 3️⃣ Căn giữa ngang */
+  box-sizing: border-box;
+  padding: 16px;
+  background: #e2e2e2;
+  border: 2px solid black;
+  border-radius: 15px;
+  height: 500px; /* 4️⃣ Giữ chiều cao đều */
+}
+
+.box img {
+  height: 170px;
+  width: auto;
+}
+
+.box button {
+  background-color: lightblue;
+  border-radius: 5px;
+  height: 50px;
+  width: 100px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+#listProducts {
+  --card-min: 280px; /* bạn chỉnh 260–320 tùy ý */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--card-min), 1fr));
+  gap: 24px; /* tăng khoảng cách giữa card */
+  padding: 16px; /* cách mép ngoài */
+  justify-items: stretch; /* cho card giãn full ô, viền không bị chạm */
+  text-align: center;
+}

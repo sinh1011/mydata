@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Bài 4</title>
+  <style>
+    ul {
+      display: none;
+      list-style: none;
+      padding: 0;
+    }
+    ul.show {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <button id="btn4">Menu</button>
+  <ul id="menu">
+    <li>Trang chủ</li>
+    <li>Giới thiệu</li>
+    <li>Liên hệ</li>
+  </ul>
+
+  <script>
+    const btn4 = document.getElementById("btn4");
+    const menu = document.getElementById("menu");
+
+    btn4.addEventListener("click", () => {
+      menu.classList.toggle("show");
+    });
+  </script>
+</body>
+</html>

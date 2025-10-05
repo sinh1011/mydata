@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- 
+🔴 Bài 4: Menu xổ xuống
+
+Có 1 nút "Menu" và 1 danh sách <ul>.
+
+CSS có class .show { display: block; }, mặc định menu display: none;.
+
+Khi click "Menu" → toggle .show cho <ul>.
+
+🟣 Bài 5: Nút Like
+
+Có icon ❤️ trong thẻ <span>.
+
+CSS có class .liked { color: red; }.
+
+Khi click vào icon → toggle class .liked → trái tim đổi màu. -->
+    <p id="text">
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae
+      ducimus non praesentium expedita. Nobis incidunt reiciendis aperiam
+      molestias dolores molestiae, laboriosam nulla amet qui delectus, ea
+      impedit, hic et excepturi.
+    </p>
+    <button id="btnChange">Change color</button>
+
+    <p id="text2">Doan van can an hien</p>
+    <button id="btn2">Hide/Show</button>
+    <br />
+    <br />
+    <button id="btnDarkMode">Dark Mode</button>
+
+    <br /><br /><br />
+    <button id="btnMenu">Menu</button>
+    <ul id="menu" class="hidden">
+      <li>option1</li>
+      <li>option2</li>
+      <li>option3</li>
+    </ul>
+
+    <!-- -------------------------------- -->
+    <h1 id="changeText">Xin chào</h1>
+    <button id="btnDisplay">Đổi nội dung</button>
+
+    <p id="count">Bạn đã click 0 lần</p>
+    <button id="btnClick">Click me</button>
+
+    <br /><br>
+
+    <input type="text" placeholder="Nhập họ tên" id="fullName" />
+    <br><br>
+    <button id="btnShowName">Hiển thị ra</button>
+    <p id="showName"></p>
+
+    <script src="main.js"></script>
+  </body>
+</html>
