@@ -10,20 +10,21 @@
     <div id="header">
       <input type="text" id="search" placeholder="Nhập tên sản phẩm..." />
       <select name="sort" id="sort">
+        <option value="default">Mặc định</option>
         <option value="price-asc">Giá tăng dần</option>
         <option value="price-desc">Giá giảm dần</option>
         <option value="name-asc">Tên A → Z</option>
         <option value="name-desc">Tên Z → A</option>
       </select>
-      <button>Search</button>
+      <button>Tìm kiếm</button>
     </div>
+    <hr />
 
     <div id="main">
-        <div id="listProducts">
-            
-
-        </div>
+      <div id="listProducts"></div>
     </div>
+
+    <div id="footer"><button>1</button><button>2</button><button>next</button></div>
 
     <script src="main.js"></script>
   </body>
