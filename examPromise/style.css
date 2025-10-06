@@ -1,3 +1,11 @@
+body {
+  margin: 0px;
+}
+
+hr{
+  margin: 0px;
+}
+
 .box {
   display: flex; /* 1️⃣ Dùng flex để kiểm soát bố cục dọc */
   flex-direction: column; /* sắp theo chiều dọc */
@@ -23,6 +31,29 @@
   width: 100px;
   font-weight: bold;
   font-size: 16px;
+}
+
+#header {
+  background-color: rgb(193, 193, 193);
+  display: flex;
+  gap: 15px;
+  height: 60px;
+  width: auto;
+  align-items: center;
+  justify-content: left;
+  padding: 0px 20px;
+}
+
+#header > * {
+    border: 2px solid black;
+    border-radius: 5px;
+    width: 311px;
+    height: 35px;
+}
+
+#header button{
+  width: 100px;
+  background-color: rgb(146, 146, 249);
 }
 
 #listProducts {
