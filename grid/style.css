@@ -1,0 +1,56 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  row-gap: 10px;
+  column-gap: 10px;
+}
+
+.item {
+  background-color: rgb(255, 177, 50);
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr 1fr;
+  gap: 10px;
+}
+
+.bai3 {
+  display: grid;
+  grid-template-areas:
+    "Header Header Header"
+    "SideBar Main Ads"
+    "Footer Footer Footer";
+gap: 10px;
+}
+.Header {
+  grid-area: Header;
+  background-color: rgb(255, 177, 50);
+}
+.SideBar {
+  grid-area: SideBar;
+  background-color: rgb(255, 177, 50);
+}
+.Main {
+  grid-area: Main;
+  background-color: rgb(255, 177, 50);
+}
+.Ads {
+  grid-area: Ads;
+  background-color: rgb(255, 177, 50);
+}
+.Footer {
+  grid-area: Footer;
+  background-color: rgb(255, 177, 50);
+}
+
+.bai4 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  row-gap: 10px;
+  column-gap: 10px;
+}
+
+#item2{
+    grid-column: span 2;
+}
