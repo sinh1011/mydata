@@ -54,3 +54,10 @@ function show1({ name, age }) {
   console.log("age = " + age);
 }
 show1(user1);
+
+const product = {
+  id: 101,
+  price: 500,
+};
+
+// ----------------------------------------------------
