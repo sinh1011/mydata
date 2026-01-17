@@ -5,12 +5,17 @@ function App() {
 
   return (
     <>
-      <Hello name="Sinh" />
+      {/* <Hello name="Sinh" />
       <Hello name="Minh" />
       <Hello name="Hanh" />
       <Counter count={1} />
 
       <Display user={user} />
+
+      <button onClick={HandleClick}>Click</button> */}
+
+      <Card title="sinh" content="sinh dep trai vcl"></Card>
+      <Card title="Vip" content="hang super vip"></Card>
     </>
   );
 }
@@ -32,5 +37,18 @@ function Display({ user = [] }) {
     </>
   );
 }
+
+function HandleClick() {
+  return console.log("HandleClick");
+}
+
+
+function Card({title,content}){
+  return <>
+  <p>{title}</p>
+  <p>{content}</p>
+  </>
+}
+
 
 export default App;
