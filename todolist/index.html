@@ -1,0 +1,621 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>React Core – Daily Checklist</title>
+  <style>
+    :root{
+      --bg:#0b1020;
+      --card:#111a33;
+      --muted:#9fb0ff;
+      --text:#e9eeff;
+      --line: rgba(255,255,255,.10);
+      --accent:#6ea8fe;
+      --danger:#ff5d5d;
+    }
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      background: radial-gradient(1200px 600px at 20% 10%, rgba(110,168,254,.25), transparent 55%),
+                  radial-gradient(1000px 600px at 90% 20%, rgba(159,176,255,.18), transparent 60%),
+                  var(--bg);
+      color:var(--text);
+    }
+    .page{
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 28px 16px 40px;
+    }
+    header{
+      display:flex;
+      gap:18px;
+      align-items:flex-start;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      margin-bottom: 14px;
+    }
+    h1{ margin:0; font-size:28px; letter-spacing:.2px; }
+    .sub{ margin:6px 0 0; color: rgba(233,238,255,.75); }
+
+    .stats{
+      min-width: 260px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .pill{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:10px 12px;
+      border:1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255,255,255,.03);
+    }
+    .pill .label{ color: rgba(233,238,255,.75); }
+    .pill .value{ font-weight: 700; }
+
+    .bar{
+      height: 10px;
+      border-radius: 999px;
+      border:1px solid var(--line);
+      overflow:hidden;
+      background: rgba(255,255,255,.03);
+    }
+    .barFill{
+      height:100%;
+      width:0%;
+      background: linear-gradient(90deg, rgba(110,168,254,.9), rgba(159,176,255,.85));
+      transition: width .2s ease;
+    }
+
+    .controls{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      align-items:flex-end;
+      padding: 14px;
+      border:1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255,255,255,.03);
+      margin: 16px 0 18px;
+    }
+    .control{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      min-width: 220px;
+    }
+    .control.grow{ flex:1; min-width: 240px; }
+    label{ font-size: 12px; color: rgba(233,238,255,.75); }
+
+    input, select{
+      height: 40px;
+      padding: 0 12px;
+      border-radius: 12px;
+      border:1px solid var(--line);
+      background: rgba(17,26,51,.65);
+      color: var(--text);
+      outline:none;
+    }
+    input::placeholder{ color: rgba(233,238,255,.45); }
+
+    .actions{
+      display:flex;
+      gap:10px;
+    }
+    button{
+      height: 40px;
+      padding: 0 14px;
+      border-radius: 12px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      cursor:pointer;
+      font-weight: 600;
+    }
+    button:hover{
+      border-color: rgba(110,168,254,.55);
+    }
+    button.danger{
+      border-color: rgba(255,93,93,.45);
+    }
+    button.danger:hover{
+      border-color: rgba(255,93,93,.75);
+    }
+
+    .content{
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+    }
+    .card{
+      border:1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(17,26,51,.55);
+      padding: 16px;
+    }
+    h2{ margin: 0 0 10px; font-size: 18px; }
+
+    .section{
+      border-top:1px solid var(--line);
+      padding-top: 12px;
+      margin-top: 12px;
+    }
+    .sectionHead{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:center;
+      flex-wrap:wrap;
+      margin-bottom: 6px;
+    }
+    h3{
+      margin:0;
+      font-size: 15px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    .tag{
+      font-size: 12px;
+      padding: 2px 8px;
+      border:1px solid rgba(110,168,254,.45);
+      border-radius: 999px;
+      color: rgba(233,238,255,.85);
+      background: rgba(110,168,254,.10);
+    }
+
+    .secProg{
+      font-size: 12px;
+      color: rgba(233,238,255,.75);
+      border:1px solid var(--line);
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.03);
+      white-space: nowrap;
+    }
+
+    ul{
+      list-style:none;
+      margin:0;
+      padding:0;
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+    li{
+      padding: 8px 10px;
+      border:1px solid rgba(255,255,255,.08);
+      border-radius: 14px;
+      background: rgba(0,0,0,.12);
+    }
+
+    .row{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      cursor:pointer;
+    }
+    .row input{
+      width: 16px;
+      height: 16px;
+      accent-color: var(--accent);
+    }
+    .text{ line-height:1.25; }
+    .text.done{
+      opacity: .75;
+      text-decoration: line-through;
+    }
+
+    footer{
+      margin-top: 18px;
+      color: rgba(233,238,255,.6);
+      font-size: 12px;
+    }
+    code{
+      background: rgba(255,255,255,.06);
+      padding: 2px 6px;
+      border-radius: 8px;
+      border:1px solid var(--line);
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div>
+        <h1>React Core – Daily Checklist</h1>
+        <p class="sub">Tick mỗi ngày, tự lưu lại trên trình duyệt (LocalStorage).</p>
+      </div>
+
+      <div class="stats">
+        <div class="pill">
+          <span class="label">Progress</span>
+          <span class="value" id="progressText">0/0 • 0%</span>
+        </div>
+        <div class="bar">
+          <div class="barFill" id="barFill"></div>
+        </div>
+      </div>
+    </header>
+
+    <section class="controls">
+      <div class="control">
+        <label>Chọn ngày</label>
+        <select id="daySelect"></select>
+      </div>
+
+      <div class="control grow">
+        <label>Tìm nhanh</label>
+        <input id="searchInput" placeholder="Ví dụ: useState, props, map..." />
+      </div>
+
+      <div class="actions">
+        <button id="markVisibleBtn" title="Đánh dấu hoàn thành cho phần đang hiển thị">Mark visible done</button>
+        <button class="danger" id="resetBtn" title="Reset toàn bộ">Reset</button>
+      </div>
+    </section>
+
+    <main class="content" id="app"></main>
+
+    <footer>
+      Tip: muốn sửa checklist → chỉnh trong <code>DATA</code> ở trong file này.
+    </footer>
+  </div>
+
+  <script>
+    // ====== DATA (bạn chỉ sửa phần này nếu muốn thêm/bớt) ======
+    const DATA = [
+      {
+        id: "stage0",
+        title: "Giai đoạn 0 – Ôn JS (Hoàn thành)",
+        items: [
+          { id: "s0_letconst", text: "let / const", doneByDefault: true },
+          { id: "s0_arrow", text: "Arrow function", doneByDefault: true },
+          { id: "s0_destructuring", text: "Destructuring", doneByDefault: true },
+          { id: "s0_spread", text: "Spread operator", doneByDefault: true },
+          { id: "s0_mapfilterreduce", text: "map / filter / reduce", doneByDefault: true },
+        ],
+      },
+      {
+        id: "stage1",
+        title: "Giai đoạn 1 – React Core (2–3 tuần)",
+        sections: [
+          {
+            id: "day1",
+            title: "Day 1 – Setup & JSX",
+            subtitle: "rồi",
+            items: [
+              { id: "d1_vite", text: "Tạo project bằng Vite" },
+              { id: "d1_jsx", text: "Hiểu JSX là gì" },
+              { id: "d1_app", text: "Tạo component App" },
+              { id: "d1_component", text: "1️⃣ Component là gì" },
+              { id: "d1_jsx2", text: "2️⃣ JSX là gì" },
+              { id: "d1_props", text: "3️⃣ Props" },
+              { id: "d1_state", text: "4️⃣ State (useState)" },
+              { id: "d1_list", text: "5️⃣ Render list (map)" },
+            ],
+          },
+          {
+            id: "day2",
+            title: "Day 2 – Component & Props",
+            items: [
+              { id: "d2_split", text: "Tách component" },
+              { id: "d2_props", text: "Truyền props" },
+              { id: "d2_destructure", text: "Destructuring props" },
+            ],
+          },
+          {
+            id: "day3",
+            title: "Day 3 – useState",
+            items: [
+              { id: "d3_concept", text: "Khái niệm state" },
+              { id: "d3_setstate", text: "setState đúng cách" },
+              { id: "d3_counter", text: "Counter app" },
+            ],
+          },
+          {
+            id: "day4",
+            title: "Day 4 – Event & Conditional Rendering",
+            items: [
+              { id: "d4_events", text: "onClick / onChange" },
+              { id: "d4_conditional", text: "Điều kiện &&, ? :" },
+              { id: "d4_toggle", text: "Toggle show/hide" },
+            ],
+          },
+          {
+            id: "day5",
+            title: "Day 5 – Render List",
+            items: [
+              { id: "d5_map", text: "map render list" },
+              { id: "d5_key", text: "key là gì" },
+              { id: "d5_todo_show", text: "Todo list hiển thị" },
+            ],
+          },
+          {
+            id: "day6",
+            title: "Day 6 – Form & Input",
+            items: [
+              { id: "d6_controlled", text: "Controlled component" },
+              { id: "d6_form_add", text: "Form add todo" },
+            ],
+          },
+          {
+            id: "day7",
+            title: "Day 7 – Lifting State",
+            items: [
+              { id: "d7_lift", text: "Đưa state lên component cha" },
+              { id: "d7_callback", text: "Truyền callback" },
+            ],
+          },
+          {
+            id: "day8",
+            title: "Day 8 – useEffect cơ bản",
+            items: [
+              { id: "d8_once", text: "useEffect chạy 1 lần" },
+              { id: "d8_deps", text: "Dependency array" },
+            ],
+          },
+          {
+            id: "day9",
+            title: "Day 9 – useEffect + API",
+            items: [
+              { id: "d9_fetch", text: "Fetch API" },
+              { id: "d9_loading", text: "Loading / error" },
+            ],
+          },
+          {
+            id: "day10",
+            title: "Day 10 – Mini Project",
+            items: [
+              { id: "d10_todo_full", text: "Todo app hoàn chỉnh" },
+              { id: "d10_localstorage", text: "LocalStorage" },
+            ],
+          },
+        ],
+      },
+    ];
+
+    // ====== APP LOGIC ======
+    const STORAGE_KEY = "react_core_checklist_plain_js_v1";
+
+    const appEl = document.getElementById("app");
+    const daySelect = document.getElementById("daySelect");
+    const searchInput = document.getElementById("searchInput");
+    const resetBtn = document.getElementById("resetBtn");
+    const markVisibleBtn = document.getElementById("markVisibleBtn");
+    const progressText = document.getElementById("progressText");
+    const barFill = document.getElementById("barFill");
+
+    function flattenAllItems(data){
+      const items = [];
+      for(const block of data){
+        if(block.items) items.push(...block.items);
+        if(block.sections){
+          for(const sec of block.sections) items.push(...sec.items);
+        }
+      }
+      return items;
+    }
+
+    function buildDefaultState(){
+      const state = {};
+      for(const it of flattenAllItems(DATA)){
+        state[it.id] = !!it.doneByDefault;
+      }
+      return state;
+    }
+
+    function loadState(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if(raw) return JSON.parse(raw);
+      }catch(e){}
+      return buildDefaultState();
+    }
+
+    function saveState(state){
+      try{
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      }catch(e){}
+    }
+
+    let checked = loadState();
+    let selectedDay = "all";
+    let query = "";
+
+    function computeStats(){
+      const keys = Object.keys(checked);
+      let done = 0;
+      for(const k of keys) if(checked[k]) done++;
+      const total = keys.length;
+      const percent = total ? Math.round((done/total)*100) : 0;
+      return {done,total,percent};
+    }
+
+    function updateProgressUI(){
+      const {done,total,percent} = computeStats();
+      progressText.textContent = `${done}/${total} • ${percent}%`;
+      barFill.style.width = `${percent}%`;
+    }
+
+    function buildDayOptions(){
+      const stage1 = DATA.find(x => x.id === "stage1");
+      const sections = stage1?.sections || [];
+      daySelect.innerHTML = "";
+      const options = [{id:"all", title:"Tất cả"}, ...sections.map(s => ({id:s.id, title:s.title}))];
+      for(const o of options){
+        const op = document.createElement("option");
+        op.value = o.id;
+        op.textContent = o.title;
+        daySelect.appendChild(op);
+      }
+    }
+
+    function filterData(){
+      const q = query.trim().toLowerCase();
+      const wantDay = selectedDay !== "all" ? selectedDay : null;
+
+      return DATA.map(block => {
+        const out = {...block};
+
+        if(out.items){
+          out.items = out.items.filter(it => {
+            const okQuery = !q || it.text.toLowerCase().includes(q);
+            return okQuery;
+          });
+        }
+
+        if(out.sections){
+          out.sections = out.sections
+            .filter(sec => !wantDay || sec.id === wantDay)
+            .map(sec => ({
+              ...sec,
+              items: sec.items.filter(it => {
+                const okQuery = !q || it.text.toLowerCase().includes(q);
+                return okQuery;
+              })
+            }))
+            .filter(sec => sec.items.length > 0);
+        }
+
+        return out;
+      });
+    }
+
+    function render(){
+      const filtered = filterData();
+      appEl.innerHTML = "";
+
+      for(const block of filtered){
+        const hasStageItems = block.items && block.items.length;
+        const hasSections = block.sections && block.sections.length;
+        if(!hasStageItems && !hasSections) continue;
+
+        const card = document.createElement("div");
+        card.className = "card";
+
+        const h2 = document.createElement("h2");
+        h2.textContent = block.title;
+        card.appendChild(h2);
+
+        if(hasStageItems){
+          card.appendChild(renderList(block.items));
+        }
+
+        if(hasSections){
+          for(const sec of block.sections){
+            const section = document.createElement("div");
+            section.className = "section";
+
+            const head = document.createElement("div");
+            head.className = "sectionHead";
+
+            const h3 = document.createElement("h3");
+            h3.textContent = sec.title;
+
+            if(sec.subtitle){
+              const tag = document.createElement("span");
+              tag.className = "tag";
+              tag.textContent = sec.subtitle;
+              h3.appendChild(tag);
+            }
+
+            const prog = document.createElement("div");
+            prog.className = "secProg";
+            const total = sec.items.length;
+            let done = 0;
+            for(const it of sec.items) if(checked[it.id]) done++;
+            const pct = total ? Math.round(done/total*100) : 0;
+            prog.textContent = `${done}/${total} • ${pct}%`;
+
+            head.appendChild(h3);
+            head.appendChild(prog);
+
+            section.appendChild(head);
+            section.appendChild(renderList(sec.items));
+
+            card.appendChild(section);
+          }
+        }
+
+        appEl.appendChild(card);
+      }
+
+      updateProgressUI();
+    }
+
+    function renderList(items){
+      const ul = document.createElement("ul");
+
+      for(const it of items){
+        const li = document.createElement("li");
+
+        const label = document.createElement("label");
+        label.className = "row";
+
+        const input = document.createElement("input");
+        input.type = "checkbox";
+        input.checked = !!checked[it.id];
+
+        const span = document.createElement("span");
+        span.className = "text" + (checked[it.id] ? " done" : "");
+        span.textContent = it.text;
+
+        input.addEventListener("change", () => {
+          checked[it.id] = !checked[it.id];
+          saveState(checked);
+          render();
+        });
+
+        label.appendChild(input);
+        label.appendChild(span);
+
+        li.appendChild(label);
+        ul.appendChild(li);
+      }
+
+      return ul;
+    }
+
+    function markVisibleDone(){
+      const filtered = filterData();
+      const ids = new Set();
+      for(const block of filtered){
+        if(block.items) for(const it of block.items) ids.add(it.id);
+        if(block.sections) for(const sec of block.sections) for(const it of sec.items) ids.add(it.id);
+      }
+      for(const id of ids) checked[id] = true;
+      saveState(checked);
+      render();
+    }
+
+    function resetAll(){
+      checked = buildDefaultState();
+      saveState(checked);
+      render();
+    }
+
+    // events
+    daySelect.addEventListener("change", (e) => {
+      selectedDay = e.target.value;
+      render();
+    });
+
+    searchInput.addEventListener("input", (e) => {
+      query = e.target.value;
+      render();
+    });
+
+    resetBtn.addEventListener("click", resetAll);
+    markVisibleBtn.addEventListener("click", markVisibleDone);
+
+    // init
+    buildDayOptions();
+    render();
+  </script>
+</body>
+</html>
