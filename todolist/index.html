@@ -4,73 +4,239 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>React Core – Daily Checklist</title>
+
   <style>
     :root{
-      --bg:#0b1020;
-      --card:#111a33;
-      --muted:#9fb0ff;
-      --text:#e9eeff;
+      --bg1:#070A14;
+      --bg2:#0A1024;
+      --card: rgba(255,255,255,.06);
+      --card2: rgba(255,255,255,.04);
       --line: rgba(255,255,255,.10);
-      --accent:#6ea8fe;
-      --danger:#ff5d5d;
+      --text:#EAF0FF;
+      --muted: rgba(234,240,255,.70);
+
+      --accent:#7C5CFF;
+      --accent2:#4ACBFF;
+      --good:#2EE59D;
+      --warn:#FFB020;
+      --bad:#FF4D6D;
+
+      --shadow: 0 18px 50px rgba(0,0,0,.45);
+      --radius: 22px;
     }
+
     *{ box-sizing:border-box; }
+    html, body{ height:100%; }
     body{
       margin:0;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
-      background: radial-gradient(1200px 600px at 20% 10%, rgba(110,168,254,.25), transparent 55%),
-                  radial-gradient(1000px 600px at 90% 20%, rgba(159,176,255,.18), transparent 60%),
-                  var(--bg);
-      color:var(--text);
+      color: var(--text);
+      background:
+        radial-gradient(900px 500px at 18% 10%, rgba(124,92,255,.35), transparent 60%),
+        radial-gradient(900px 500px at 80% 18%, rgba(74,203,255,.22), transparent 60%),
+        radial-gradient(800px 500px at 45% 80%, rgba(46,229,157,.12), transparent 60%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+      overflow-x:hidden;
     }
-    .page{
-      max-width: 980px;
+
+    .wrap{
+      max-width: 1080px;
       margin: 0 auto;
-      padding: 28px 16px 40px;
+      padding: 26px 16px 40px;
     }
-    header{
+
+    /* Topbar */
+    .topbar{
       display:flex;
-      gap:18px;
-      align-items:flex-start;
       justify-content:space-between;
+      gap:14px;
+      align-items:flex-start;
       flex-wrap:wrap;
+      margin-bottom: 18px;
+    }
+
+    .brand{
+      display:flex;
+      gap:14px;
+      align-items:center;
+    }
+
+    .logo{
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background:
+        radial-gradient(12px 12px at 30% 30%, rgba(255,255,255,.85), transparent 70%),
+        linear-gradient(135deg, rgba(124,92,255,1), rgba(74,203,255,1));
+      box-shadow: 0 14px 35px rgba(124,92,255,.25);
+      border: 1px solid rgba(255,255,255,.14);
+    }
+
+    h1{
+      margin:0;
+      font-size: 20px;
+      letter-spacing: .2px;
+      line-height: 1.1;
+    }
+
+    .subtitle{
+      margin:6px 0 0;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .quickActions{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+
+    .chip{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 25px rgba(0,0,0,.25);
+      user-select:none;
+    }
+    .chip strong{ font-weight: 800; }
+    .dot{
+      width:10px; height:10px;
+      border-radius: 99px;
+      background: linear-gradient(135deg, var(--good), var(--accent2));
+      box-shadow: 0 0 0 4px rgba(46,229,157,.10);
+    }
+
+    button{
+      cursor:pointer;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.05);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 14px;
+      font-weight: 700;
+      transition: transform .08s ease, border-color .15s ease, background .15s ease;
+    }
+    button:hover{
+      border-color: rgba(124,92,255,.45);
+      background: rgba(124,92,255,.10);
+    }
+    button:active{ transform: translateY(1px); }
+
+    .danger{
+      border-color: rgba(255,77,109,.35);
+    }
+    .danger:hover{
+      border-color: rgba(255,77,109,.65);
+      background: rgba(255,77,109,.12);
+    }
+
+    /* Summary Cards */
+    .summaryGrid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 14px;
       margin-bottom: 14px;
     }
-    h1{ margin:0; font-size:28px; letter-spacing:.2px; }
-    .sub{ margin:6px 0 0; color: rgba(233,238,255,.75); }
 
-    .stats{
-      min-width: 260px;
-      display:flex;
-      flex-direction:column;
-      gap:10px;
+    @media (max-width: 860px){
+      .summaryGrid{ grid-template-columns: 1fr; }
     }
-    .pill{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:10px 12px;
-      border:1px solid var(--line);
-      border-radius: 14px;
-      background: rgba(255,255,255,.03);
-    }
-    .pill .label{ color: rgba(233,238,255,.75); }
-    .pill .value{ font-weight: 700; }
 
-    .bar{
-      height: 10px;
-      border-radius: 999px;
-      border:1px solid var(--line);
+    .panel{
+      border-radius: var(--radius);
+      background: var(--card);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      padding: 14px;
+      position: relative;
       overflow:hidden;
-      background: rgba(255,255,255,.03);
     }
-    .barFill{
+
+    .panel::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background: radial-gradient(800px 220px at 20% 0%, rgba(124,92,255,.18), transparent 60%);
+      pointer-events:none;
+    }
+
+    .panelTitle{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .panelTitle h2{
+      margin:0;
+      font-size: 14px;
+      color: rgba(234,240,255,.85);
+      letter-spacing:.2px;
+    }
+
+    .bigNumber{
+      font-size: 26px;
+      font-weight: 900;
+      letter-spacing: .2px;
+    }
+
+    .muted{ color: var(--muted); font-size: 12px; }
+
+    .progressBar{
+      height: 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.22);
+      overflow:hidden;
+      position: relative;
+      z-index: 1;
+    }
+    .progressFill{
       height:100%;
       width:0%;
-      background: linear-gradient(90deg, rgba(110,168,254,.9), rgba(159,176,255,.85));
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      box-shadow: 0 0 18px rgba(124,92,255,.35);
       transition: width .2s ease;
     }
 
+    .summaryRow{
+      display:flex;
+      justify-content:space-between;
+      align-items:baseline;
+      gap:12px;
+      margin: 10px 0 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .miniInfo{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      position: relative;
+      z-index: 1;
+    }
+
+    .pill{
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      font-size: 12px;
+      color: rgba(234,240,255,.85);
+    }
+
+    /* Controls */
     .controls{
       display:flex;
       gap:12px;
@@ -78,104 +244,137 @@
       align-items:flex-end;
       padding: 14px;
       border:1px solid var(--line);
-      border-radius: 18px;
-      background: rgba(255,255,255,.03);
-      margin: 16px 0 18px;
+      border-radius: var(--radius);
+      background: var(--card2);
+      box-shadow: 0 18px 45px rgba(0,0,0,.32);
+      backdrop-filter: blur(10px);
+      margin-bottom: 14px;
     }
-    .control{
+
+    .field{
       display:flex;
       flex-direction:column;
       gap:6px;
-      min-width: 220px;
+      min-width: 230px;
+      flex: 0 0 auto;
     }
-    .control.grow{ flex:1; min-width: 240px; }
-    label{ font-size: 12px; color: rgba(233,238,255,.75); }
 
-    input, select{
-      height: 40px;
-      padding: 0 12px;
-      border-radius: 12px;
-      border:1px solid var(--line);
-      background: rgba(17,26,51,.65);
+    .field.grow{
+      flex: 1 1 auto;
+      min-width: 240px;
+    }
+
+    label{
+      font-size: 12px;
+      color: rgba(234,240,255,.70);
+    }
+
+    select, input{
+      height: 42px;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(10,16,36,.55);
       color: var(--text);
+      padding: 0 12px;
       outline:none;
     }
-    input::placeholder{ color: rgba(233,238,255,.45); }
+    input::placeholder{ color: rgba(234,240,255,.45); }
 
     .actions{
       display:flex;
       gap:10px;
-    }
-    button{
-      height: 40px;
-      padding: 0 14px;
-      border-radius: 12px;
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.04);
-      color: var(--text);
-      cursor:pointer;
-      font-weight: 600;
-    }
-    button:hover{
-      border-color: rgba(110,168,254,.55);
-    }
-    button.danger{
-      border-color: rgba(255,93,93,.45);
-    }
-    button.danger:hover{
-      border-color: rgba(255,93,93,.75);
+      flex-wrap:wrap;
     }
 
+    /* Content */
     .content{
       display:flex;
       flex-direction:column;
-      gap:14px;
+      gap: 14px;
     }
-    .card{
-      border:1px solid var(--line);
-      border-radius: 18px;
-      background: rgba(17,26,51,.55);
-      padding: 16px;
-    }
-    h2{ margin: 0 0 10px; font-size: 18px; }
 
-    .section{
-      border-top:1px solid var(--line);
-      padding-top: 12px;
-      margin-top: 12px;
+    .cardBlock{
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.045);
+      border: 1px solid rgba(255,255,255,.10);
+      box-shadow: var(--shadow);
+      overflow:hidden;
     }
-    .sectionHead{
+
+    .cardHead{
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
       display:flex;
       justify-content:space-between;
       gap:12px;
-      align-items:center;
-      flex-wrap:wrap;
-      margin-bottom: 6px;
-    }
-    h3{
-      margin:0;
-      font-size: 15px;
-      display:flex;
-      align-items:center;
-      gap:8px;
-    }
-    .tag{
-      font-size: 12px;
-      padding: 2px 8px;
-      border:1px solid rgba(110,168,254,.45);
-      border-radius: 999px;
-      color: rgba(233,238,255,.85);
-      background: rgba(110,168,254,.10);
+      align-items:flex-start;
+      background:
+        radial-gradient(700px 220px at 12% 0%, rgba(74,203,255,.12), transparent 60%),
+        rgba(255,255,255,.02);
     }
 
-    .secProg{
+    .cardHead h3{
+      margin:0;
+      font-size: 15px;
+      letter-spacing:.2px;
+    }
+
+    .cardHead .small{
+      margin-top:6px;
+      color: rgba(234,240,255,.65);
       font-size: 12px;
-      color: rgba(233,238,255,.75);
-      border:1px solid var(--line);
-      padding: 6px 10px;
+    }
+
+    .cardBody{
+      padding: 12px 14px 14px;
+    }
+
+    .section{
+      padding: 12px 0;
+      border-top: 1px dashed rgba(255,255,255,.12);
+    }
+    .section:first-child{ border-top:none; padding-top: 4px; }
+
+    .sectionTitleRow{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-bottom: 10px;
+    }
+
+    .sectionTitle{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight: 800;
+      letter-spacing:.15px;
+    }
+
+    .badge{
+      font-size: 12px;
+      padding: 5px 10px;
       border-radius: 999px;
-      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      color: rgba(234,240,255,.85);
       white-space: nowrap;
+    }
+
+    .badge.ok{
+      border-color: rgba(46,229,157,.25);
+      background: rgba(46,229,157,.08);
+    }
+
+    .badge.mid{
+      border-color: rgba(255,176,32,.28);
+      background: rgba(255,176,32,.08);
+    }
+
+    .badge.low{
+      border-color: rgba(255,77,109,.30);
+      background: rgba(255,77,109,.10);
     }
 
     ul{
@@ -184,94 +383,152 @@
       padding:0;
       display:flex;
       flex-direction:column;
-      gap:6px;
-    }
-    li{
-      padding: 8px 10px;
-      border:1px solid rgba(255,255,255,.08);
-      border-radius: 14px;
-      background: rgba(0,0,0,.12);
+      gap:8px;
     }
 
-    .row{
+    .task{
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+      border-radius: 16px;
+      padding: 10px 12px;
+      transition: transform .08s ease, border-color .15s ease, background .15s ease;
+    }
+    .task:hover{
+      border-color: rgba(124,92,255,.35);
+      background: rgba(124,92,255,.07);
+    }
+
+    .taskRow{
       display:flex;
+      align-items:flex-start;
       gap:10px;
-      align-items:center;
       cursor:pointer;
     }
-    .row input{
-      width: 16px;
-      height: 16px;
+
+    .taskRow input{
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
       accent-color: var(--accent);
+      cursor:pointer;
     }
-    .text{ line-height:1.25; }
-    .text.done{
-      opacity: .75;
+
+    .taskText{
+      line-height: 1.25;
+      font-size: 14px;
+    }
+
+    .taskText.done{
       text-decoration: line-through;
+      opacity: .70;
     }
 
     footer{
       margin-top: 18px;
-      color: rgba(233,238,255,.6);
+      color: rgba(234,240,255,.55);
       font-size: 12px;
+      text-align:center;
     }
-    code{
-      background: rgba(255,255,255,.06);
-      padding: 2px 6px;
-      border-radius: 8px;
-      border:1px solid var(--line);
+
+    .hint{
+      display:inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
     }
   </style>
 </head>
+
 <body>
-  <div class="page">
-    <header>
-      <div>
-        <h1>React Core – Daily Checklist</h1>
-        <p class="sub">Tick mỗi ngày, tự lưu lại trên trình duyệt (LocalStorage).</p>
-      </div>
+  <div class="wrap">
 
-      <div class="stats">
-        <div class="pill">
-          <span class="label">Progress</span>
-          <span class="value" id="progressText">0/0 • 0%</span>
-        </div>
-        <div class="bar">
-          <div class="barFill" id="barFill"></div>
+    <!-- Topbar -->
+    <div class="topbar">
+      <div class="brand">
+        <div class="logo"></div>
+        <div>
+          <h1>React Core – Daily Checklist</h1>
+          <div class="subtitle">Tick mỗi ngày cho đỡ quên 😤 (tự lưu LocalStorage)</div>
         </div>
       </div>
-    </header>
 
-    <section class="controls">
-      <div class="control">
+      <div class="quickActions">
+        <div class="chip" title="Tự lưu ngay trong trình duyệt">
+          <span class="dot"></span>
+          <span>Auto-save</span>
+        </div>
+        <button id="markVisibleBtn">✅ Tick phần đang xem</button>
+        <button id="resetBtn" class="danger">↺ Reset</button>
+      </div>
+    </div>
+
+    <!-- Summary -->
+    <div class="summaryGrid">
+      <div class="panel">
+        <div class="panelTitle">
+          <h2>Progress tổng</h2>
+          <div class="pill" id="progressText">0/0 • 0%</div>
+        </div>
+
+        <div class="summaryRow">
+          <div>
+            <div class="bigNumber" id="percentText">0%</div>
+            <div class="muted">Cứ mỗi ngày tick chút là auto lên trình 🚀</div>
+          </div>
+
+          <div class="miniInfo">
+            <div class="pill" id="doneText">Done: 0</div>
+            <div class="pill" id="totalText">Total: 0</div>
+          </div>
+        </div>
+
+        <div class="progressBar" aria-label="progress bar">
+          <div class="progressFill" id="barFill"></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panelTitle">
+          <h2>Tip nhỏ</h2>
+          <div class="pill">Focus</div>
+        </div>
+        <div class="muted" style="line-height:1.5; position:relative; z-index:1;">
+          • Học mỗi ngày 30–45 phút là đủ 😌<br/>
+          • Day nào chưa chắc → tick cái bạn hiểu trước<br/>
+          • Làm mini bài tập để nhớ lâu hơn ✅
+        </div>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+      <div class="field">
         <label>Chọn ngày</label>
         <select id="daySelect"></select>
       </div>
 
-      <div class="control grow">
+      <div class="field grow">
         <label>Tìm nhanh</label>
         <input id="searchInput" placeholder="Ví dụ: useState, props, map..." />
       </div>
+    </div>
 
-      <div class="actions">
-        <button id="markVisibleBtn" title="Đánh dấu hoàn thành cho phần đang hiển thị">Mark visible done</button>
-        <button class="danger" id="resetBtn" title="Reset toàn bộ">Reset</button>
-      </div>
-    </section>
-
+    <!-- Content -->
     <main class="content" id="app"></main>
 
     <footer>
-      Tip: muốn sửa checklist → chỉnh trong <code>DATA</code> ở trong file này.
+      <span class="hint">Muốn sửa checklist: chỉnh <b>DATA</b> ở trong file này ✨</span>
     </footer>
   </div>
 
   <script>
-    // ====== DATA (bạn chỉ sửa phần này nếu muốn thêm/bớt) ======
+    // ====== DATA ======
     const DATA = [
       {
         id: "stage0",
         title: "Giai đoạn 0 – Ôn JS (Hoàn thành)",
+        desc: "Bạn đã làm xong phần JS core rồi 🔥",
         items: [
           { id: "s0_letconst", text: "let / const", doneByDefault: true },
           { id: "s0_arrow", text: "Arrow function", doneByDefault: true },
@@ -283,6 +540,7 @@
       {
         id: "stage1",
         title: "Giai đoạn 1 – React Core (2–3 tuần)",
+        desc: "Đi đều từng ngày là lên tay nhanh lắm 😤",
         sections: [
           {
             id: "day1",
@@ -379,15 +637,20 @@
       },
     ];
 
-    // ====== APP LOGIC ======
-    const STORAGE_KEY = "react_core_checklist_plain_js_v1";
+    // ====== APP ======
+    const STORAGE_KEY = "react_core_checklist_plain_js_v2";
 
     const appEl = document.getElementById("app");
     const daySelect = document.getElementById("daySelect");
     const searchInput = document.getElementById("searchInput");
+
     const resetBtn = document.getElementById("resetBtn");
     const markVisibleBtn = document.getElementById("markVisibleBtn");
+
     const progressText = document.getElementById("progressText");
+    const percentText = document.getElementById("percentText");
+    const doneText = document.getElementById("doneText");
+    const totalText = document.getElementById("totalText");
     const barFill = document.getElementById("barFill");
 
     function flattenAllItems(data){
@@ -439,6 +702,9 @@
     function updateProgressUI(){
       const {done,total,percent} = computeStats();
       progressText.textContent = `${done}/${total} • ${percent}%`;
+      percentText.textContent = `${percent}%`;
+      doneText.textContent = `Done: ${done}`;
+      totalText.textContent = `Total: ${total}`;
       barFill.style.width = `${percent}%`;
     }
 
@@ -446,7 +712,9 @@
       const stage1 = DATA.find(x => x.id === "stage1");
       const sections = stage1?.sections || [];
       daySelect.innerHTML = "";
+
       const options = [{id:"all", title:"Tất cả"}, ...sections.map(s => ({id:s.id, title:s.title}))];
+
       for(const o of options){
         const op = document.createElement("option");
         op.value = o.id;
@@ -486,6 +754,14 @@
       });
     }
 
+    function badgeClass(done, total){
+      if(total === 0) return "badge low";
+      const pct = Math.round(done/total * 100);
+      if(pct >= 75) return "badge ok";
+      if(pct >= 35) return "badge mid";
+      return "badge low";
+    }
+
     function render(){
       const filtered = filterData();
       appEl.innerHTML = "";
@@ -495,15 +771,31 @@
         const hasSections = block.sections && block.sections.length;
         if(!hasStageItems && !hasSections) continue;
 
-        const card = document.createElement("div");
-        card.className = "card";
+        const card = document.createElement("section");
+        card.className = "cardBlock";
 
-        const h2 = document.createElement("h2");
-        h2.textContent = block.title;
-        card.appendChild(h2);
+        const head = document.createElement("div");
+        head.className = "cardHead";
+
+        const titleWrap = document.createElement("div");
+        const h3 = document.createElement("h3");
+        h3.textContent = block.title;
+
+        const small = document.createElement("div");
+        small.className = "small";
+        small.textContent = block.desc || "";
+
+        titleWrap.appendChild(h3);
+        titleWrap.appendChild(small);
+        head.appendChild(titleWrap);
+
+        card.appendChild(head);
+
+        const body = document.createElement("div");
+        body.className = "cardBody";
 
         if(hasStageItems){
-          card.appendChild(renderList(block.items));
+          body.appendChild(renderList(block.items));
         }
 
         if(hasSections){
@@ -511,37 +803,40 @@
             const section = document.createElement("div");
             section.className = "section";
 
-            const head = document.createElement("div");
-            head.className = "sectionHead";
+            const titleRow = document.createElement("div");
+            titleRow.className = "sectionTitleRow";
 
-            const h3 = document.createElement("h3");
-            h3.textContent = sec.title;
+            const left = document.createElement("div");
+            left.className = "sectionTitle";
+            left.textContent = sec.title;
 
             if(sec.subtitle){
               const tag = document.createElement("span");
-              tag.className = "tag";
+              tag.className = "badge";
               tag.textContent = sec.subtitle;
-              h3.appendChild(tag);
+              left.appendChild(tag);
             }
 
-            const prog = document.createElement("div");
-            prog.className = "secProg";
             const total = sec.items.length;
             let done = 0;
             for(const it of sec.items) if(checked[it.id]) done++;
             const pct = total ? Math.round(done/total*100) : 0;
-            prog.textContent = `${done}/${total} • ${pct}%`;
 
-            head.appendChild(h3);
-            head.appendChild(prog);
+            const badge = document.createElement("div");
+            badge.className = badgeClass(done, total);
+            badge.textContent = `${done}/${total} • ${pct}%`;
 
-            section.appendChild(head);
+            titleRow.appendChild(left);
+            titleRow.appendChild(badge);
+
+            section.appendChild(titleRow);
             section.appendChild(renderList(sec.items));
 
-            card.appendChild(section);
+            body.appendChild(section);
           }
         }
 
+        card.appendChild(body);
         appEl.appendChild(card);
       }
 
@@ -553,16 +848,17 @@
 
       for(const it of items){
         const li = document.createElement("li");
+        li.className = "task";
 
         const label = document.createElement("label");
-        label.className = "row";
+        label.className = "taskRow";
 
         const input = document.createElement("input");
         input.type = "checkbox";
         input.checked = !!checked[it.id];
 
-        const span = document.createElement("span");
-        span.className = "text" + (checked[it.id] ? " done" : "");
+        const span = document.createElement("div");
+        span.className = "taskText" + (checked[it.id] ? " done" : "");
         span.textContent = it.text;
 
         input.addEventListener("change", () => {
