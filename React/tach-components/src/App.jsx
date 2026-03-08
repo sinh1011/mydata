@@ -15,7 +15,8 @@ function App() {
       <Card title="FREE" content="hang thường" /> */}
 
       {/* <MusicList></MusicList> */}
-      <FoodItem></FoodItem>
+      {/* <FoodItem></FoodItem> */}
+      <HappyNewYear></HappyNewYear>
     </>
   );
 }
@@ -124,6 +125,11 @@ function DisplayItem({item, handleDelete}) {
       </div>
     </>
   );
+}
+function HappyNewYear(){
+  return<>
+  Chúc mừng năm mới
+  </>
 }
 
 export default App;
