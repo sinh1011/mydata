@@ -8,6 +8,8 @@ function App() {
       <Number></Number>
       <Obj></Obj>
       <Delete></Delete>
+      <hr />
+      <TodoList></TodoList>
     </>
   );
 }
@@ -80,10 +82,32 @@ function Delete() {
 
       {todos.map((i) => (
         <p key={i.id}>
-          - {i.text} <button onClick={() => handleDelete(i.id)}>x</button>
+          - {i.text} id:{i.id} <button onClick={() => handleDelete(i.id)}>x</button>
         </p>
       ))}
     </>
   );
 }
+
+function TodoList() {
+  const [todos, setTodos] = useState([
+    { id: 1, text: "Học React" },
+    { id: 2, text: "Ăn cơm" },
+    { id: 3, text: "Đi ngủ" },
+  ]);
+
+  return (
+  <>
+    {todos.length === 0 ? (
+      <p>Không có việc nào</p>
+    ) : (
+      todos.map((todo) => (
+        <p key={todo.id}>- {todo.text}</p>
+      ))
+    )}
+  </>
+);
+}
+
+
 export default App;
