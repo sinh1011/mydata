@@ -4,147 +4,69 @@ import "./App.css";
 function App() {
   return (
     <>
-      <CountApp></CountApp>
-      <DisplayInput></DisplayInput>
+      <TodosApp></TodosApp>
     </>
   );
 }
 function TodosApp() {
   const [input, setInput] = useState("");
-  const [todos, setTodos] = useState([]);
+  const [result, setResult] = useState([]);
 
-  const handleSubmit = (e) => {
+  const handleForm = (e) => {
     e.preventDefault();
     if (!input.trim()) return;
-    setTodos((prev) => [...prev, { id: Date.now(), text: input }]);
-    // 3. add todo mới
+    setResult((prev) => [...prev, { id: Date.now(), text: input }]);
     setInput("");
   };
-  const handleRefresh = () => {
-    setTodos([]);
+
+  const handleReset = () => {
+    setResult([]);
+    setInput("");
   };
 
   return (
-    <>
-      <TodoForm
-        input={input}
-        setInput={setInput}
-        handleSubmit={handleSubmit}
-        handleRefresh={handleRefresh}
-      />
-
-      <TodoList todos={todos} />
-    </>
-  );
-}
-
-function TodoForm({ input, setInput, handleSubmit, handleRefresh }) {
-  return (
-    <form onSubmit={handleSubmit}>
-      <TodosInput input={input} setInput={setInput} />
-      <button type="submit">ADD</button>
-      <button type="button" onClick={handleRefresh}>
-        Refresh
-      </button>
+    <form onSubmit={handleForm}>
+      <InputTodos input={input} setInput={setInput}></InputTodos>
+      <ButtonTodos></ButtonTodos>
+      <ButtonReset handleReset={handleReset}></ButtonReset>
+      <DisplayTodos result={result}></DisplayTodos>
     </form>
   );
 }
 
-function TodosInput({ input, setInput }) {
+function InputTodos({ input, setInput }) {
   return (
     <input
       type="text"
       value={input}
       onChange={(e) => setInput(e.target.value)}
-      placeholder="Your text"
     />
   );
 }
 
-function TodoList({ todos }) {
+function ButtonTodos() {
+  return <button type="submit">Add</button>;
+}
+
+function DisplayTodos({ result }) {
   return (
     <>
-      {todos.length === 0 ? (
-        <p>Chưa có nhiệm vụ</p>
+      {result.length === 0 ? (
+        <p>Chưa có công việc</p>
       ) : (
-        todos.map((todo) => <p key={todo.id}>- {todo.text}</p>)
+        result.map((i) => <p key={i.id}>- {i.text}</p>)
       )}
     </>
   );
 }
 
-function CountApp() {
-  const [count, setCount] = useState(0);
-  const handleIncrease = () => {
-    setCount((prev) => prev + 1);
-  };
-  const handleDecrease = () => {
-    setCount((prev) => prev - 1);
-  };
-  const handRefresh = () => {
-    setCount(0);
-  };
+function ButtonReset({ handleReset }) {
   return (
     <>
-      <h1>{count}</h1>
-      <ButtonCount
-        handRefresh={handRefresh}
-        handleIncrease={handleIncrease}
-        handleDecrease={handleDecrease}
-      ></ButtonCount>
+      <button type="button" onClick={handleReset}>
+        Reset
+      </button>
     </>
   );
 }
-
-function ButtonCount({ handleIncrease, handleDecrease, handRefresh }) {
-  return (
-    <>
-      <button onClick={handleIncrease}>+</button>
-      <button onClick={handleDecrease}>-</button>
-      <button onClick={handRefresh}>Refresh</button>
-    </>
-  );
-}
-
-function DisplayInput() {
-  const [input, setInput] = useState("");
-  const [show, setShow] = useState("");
-  const handleForm = (e) => {
-    e.preventDefault();
-    if (!input.trim()) return;
-    setShow(input);
-    setInput("");
-  };
-  return (
-    <>
-      <form onSubmit={handleForm}>
-        <InputShow input={input} setInput={setInput}></InputShow>
-        <ButtonShowInput></ButtonShowInput>
-        <DisplayShowInput show={show}></DisplayShowInput>
-      </form>
-    </>
-  );
-}
-function InputShow({ input, setInput }) {
-  return (
-    <>
-      <input
-        type="text"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-      />
-    </>
-  );
-}
-function ButtonShowInput() {
-  return (
-    <>
-      <button type="submit">send</button>
-    </>
-  );
-}
-function DisplayShowInput({ show }) {
-  return <>{!show ? <p>bạn chưa nhập gì</p> : <p>Bạn đã nhập: {show}</p>}</>;
-}
-
 export default App;
