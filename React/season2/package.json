@@ -1,0 +1,11 @@
+{
+  "name": "season2",
+  "private": true,
+  "version": "0.0.0",
+  "homepage": "https://sinh1011.github.io/season2",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "deploy": "gh-pages -d dist"
+  }
+}
