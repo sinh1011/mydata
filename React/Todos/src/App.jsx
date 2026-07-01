@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 
 function App() {
@@ -10,9 +10,18 @@ function App() {
 }
 
 function TodoApp() {
-  const [list, setList] = useState([]);
+  const [list, setList] = useState(() => {
+    const saveList = localStorage.getItem("todos_list");
+    return saveList ? JSON.parse(saveList) : [];
+  });
   const [input, setInput] = useState("");
   const [filter, setFilter] = useState("All");
+  const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    localStorage.setItem("todos_list", JSON.stringify(list));
+  }, [list]);
+  console.log(search);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -25,6 +34,8 @@ function TodoApp() {
   };
 
   const handleReset = () => {
+    setInput("");
+    setSearch("");
     setList([]);
   };
 
@@ -39,13 +50,15 @@ function TodoApp() {
   };
 
   const listFilter = list.filter((i) => {
-    if (filter === "Active") return !i.complete;
-    if (filter === "Done") return i.complete;
-    return true;
+    const matchersSearch = i.name.toLowerCase().includes(search.toLowerCase());
+    if (filter === "Active") return !i.complete && matchersSearch;
+    if (filter === "Done") return i.complete && matchersSearch;
+    return matchersSearch;
   });
 
   return (
     <>
+      <Search search={search} setSearch={setSearch}></Search>
       <Form
         list={list}
         input={input}
@@ -71,8 +84,6 @@ function TodoApp() {
   );
 }
 function Form({ list, input, setInput, handleSubmit, handleReset }) {
-  console.log(list);
-
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -113,6 +124,18 @@ function Display({ list, handleDelete, toggleComplete }) {
           <button onClick={() => handleDelete(i.id)}>Delete</button>
         </div>
       ))}
+    </>
+  );
+}
+
+function Search({ search, setSearch }) {
+  return (
+    <>
+      <input
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        placeholder="Nhập công việc cần tìm"
+      ></input>
     </>
   );
 }
