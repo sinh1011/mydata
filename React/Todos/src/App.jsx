@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 import "./App.css";
+import TodoForm from "./components/TodoForm";
+import TodoDisplay from "./components/TodoDisplay";
+import TodoSearch from "./components/TodoSearch";
 
 function App() {
   return (
@@ -37,6 +40,7 @@ function TodoApp() {
     setInput("");
     setSearch("");
     setList([]);
+    setFilter("All");
   };
 
   const handleDelete = (id) => {
@@ -58,14 +62,14 @@ function TodoApp() {
 
   return (
     <>
-      <Search search={search} setSearch={setSearch}></Search>
-      <Form
+      <TodoSearch search={search} setSearch={setSearch}></TodoSearch>
+      <TodoForm
         list={list}
         input={input}
         setInput={setInput}
         handleSubmit={handleSubmit}
         handleReset={handleReset}
-      ></Form>
+      ></TodoForm>
       <select
         id="filterSearch"
         value={filter}
@@ -75,67 +79,11 @@ function TodoApp() {
         <option value={"Active"}>Active</option>
         <option value={"Done"}>Done</option>
       </select>
-      <Display
+      <TodoDisplay
         list={listFilter}
         handleDelete={handleDelete}
         toggleComplete={toggleComplete}
-      ></Display>
-    </>
-  );
-}
-function Form({ list, input, setInput, handleSubmit, handleReset }) {
-  return (
-    <>
-      <form onSubmit={handleSubmit}>
-        <input
-          value={input}
-          onChange={(e) => {
-            setInput(e.target.value);
-          }}
-          placeholder="Nhập công việc"
-        ></input>
-
-        <button type="submit">Submit</button>
-        <button type="button" onClick={() => handleReset()}>
-          Reset
-        </button>
-      </form>
-    </>
-  );
-}
-
-function Display({ list, handleDelete, toggleComplete }) {
-  return (
-    <>
-      {list.length === 0 && <p>Chưa có công việc nào!</p>}
-
-      {list.map((i) => (
-        <div key={i.id}>
-          <p
-            onClick={() => toggleComplete(i.id)}
-            style={{
-              cursor: "pointer",
-              textDecoration: i.complete ? "line-through" : "none",
-              color: i.complete ? "#aaa" : "#000",
-            }}
-          >
-            - {i.name}
-          </p>
-          <button onClick={() => handleDelete(i.id)}>Delete</button>
-        </div>
-      ))}
-    </>
-  );
-}
-
-function Search({ search, setSearch }) {
-  return (
-    <>
-      <input
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        placeholder="Nhập công việc cần tìm"
-      ></input>
+      ></TodoDisplay>
     </>
   );
 }
