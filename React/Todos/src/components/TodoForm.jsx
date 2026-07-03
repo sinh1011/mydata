@@ -1,5 +1,4 @@
 export default function TodoForm({
-  list,
   input,
   setInput,
   handleSubmit,

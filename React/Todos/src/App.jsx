@@ -64,7 +64,6 @@ function TodoApp() {
     <>
       <TodoSearch search={search} setSearch={setSearch}></TodoSearch>
       <TodoForm
-        list={list}
         input={input}
         setInput={setInput}
         handleSubmit={handleSubmit}
