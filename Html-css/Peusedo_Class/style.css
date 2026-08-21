@@ -1,0 +1,23 @@
+/* .dichuot:active{          nhấn giữ thì nó sẽ thay đổi theo thuộc tínhhhh
+    color: red;
+    font-size: 20px;
+} */
+
+/* .click_me:link{      khi chưa nhấn vào thì nó sẽ làm theo thuộc tínhh
+    color: chocolate;
+}
+
+.click_me:visited{  nhấn vào thì nó sẽ làm theo thuộc tính trong ngoặc
+    color: green;
+} */
+
+.div_elm:empty{
+    height: 200px;
+    width: 200px;
+    background-color: aqua;
+}
+h2:target{
+    color: aliceblue;
+    background-color: black;
+}
+
