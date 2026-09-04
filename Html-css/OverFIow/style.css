@@ -1,0 +1,26 @@
+.box {
+  width: 400px;
+  height: 200px;
+  background-color: aqua;
+  overflow: auto;
+}
+
+/* width */
+.box::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+.box::-webkit-scrollbar-track {
+  background: #f2ff00;
+}
+
+/* Handle */
+.box::-webkit-scrollbar-thumb {
+  background: #0037ff;
+}
+
+/* Handle on hover */
+.box::-webkit-scrollbar-thumb:hover {
+  background: #ff0000;
+}
