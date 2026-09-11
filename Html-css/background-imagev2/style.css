@@ -1,0 +1,22 @@
+.box {
+  width: 400px;
+  height: 200px;
+  border: 5px dashed blue;
+  background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcToxuKyL69sawCnwXtP_8ikfYGdy4CNPPxjL-C-2OWO0A&s=10);
+  background-position: top right;
+  background-position: top right;
+  background-position: bottom left;
+  background-position: bottom right;
+  background-position: top;
+  background-position: center;
+  background-position: bottom;
+  background-position: top right;
+  background-position: left;
+  background-repeat: no-repeat;
+  background-position: 0% 0%;
+}
+
+img {
+  width: 15%;
+  margin-top: 20px;
+}
