@@ -1,0 +1,13 @@
+.box {
+  width: 150px;
+  height: 150px;
+  margin: 100px;
+  background-color: pink;
+  box-shadow: 20px -16px 50px blue;
+  box-shadow: inset 20px 10px 20px 10px green;
+  box-shadow:
+    155px 0 yellow,
+    0 155px red,
+    155px 155px blue;
+  border-radius: 100%;
+}
