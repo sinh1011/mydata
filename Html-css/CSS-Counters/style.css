@@ -1,0 +1,25 @@
+.box {
+  counter-reset: section;
+  counter-reset:;
+
+  background-color: aqua;
+}
+
+h2 {
+  counter-increment: section;
+  counter-reset: sub-section;
+}
+
+h2::before {
+  content: "Phần " counter(section) ": ";
+  color: red;
+}
+
+h3 {
+  counter-increment: sub-section;
+}
+
+h3::before {
+  content: "Nội dung " counter(section) "." counter(sub-section) ": ";
+  color: rgb(85, 0, 255);
+}
