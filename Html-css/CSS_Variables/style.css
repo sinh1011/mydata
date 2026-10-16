@@ -1,0 +1,21 @@
+:root {
+  --height_box: 100px;
+  --color_box: red;
+  --margin_bottom: 10px;
+}
+
+.box1 {
+  height: var(--height_box);
+  background-color: var(--color_box);
+  margin-bottom: var(--margin_bottom);
+}
+.box2 {
+  height: var(--height_box);
+  background-color: var(--color_box);
+  margin-bottom: var(--margin_bottom);
+}
+.box3 {
+  height: var(--height_box);
+  background-color: var(--color_box);
+  margin-bottom: var(--margin_bottom);
+}
