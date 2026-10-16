@@ -1,6 +1,5 @@
 .box {
   counter-reset: section;
-  counter-reset:;
 
   background-color: aqua;
 }
