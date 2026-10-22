@@ -1,0 +1,33 @@
+.box {
+  width: 200px;
+  height: 200px;
+  /* margin-bottom: 20px; */
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.content {
+  width: 600px;
+  background-color: #87f600;
+  margin: 40px;
+  position:;
+}
+
+.box1 {
+  background-color: blue;
+}
+
+.box2 {
+  background-color: red;
+  position: absolute;
+  left: 0;
+  top: 0;
+  /* position: relative;
+  bottom: 50px;
+  left: 20px; */
+}
+.box3 {
+  background-color: green;
+}
