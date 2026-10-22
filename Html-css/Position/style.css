@@ -1,0 +1,17 @@
+.noti {
+  margin: 5rem;
+  font-size: 10rem;
+  color: blue;
+  position: relative;
+}
+
+.mes-number {
+  background-color: red;
+  padding: 10px;
+  color: white;
+  border-radius: 50px;
+  font-size: 3rem;
+  position: absolute;
+  left: 131px;
+  top: -8px;
+}
